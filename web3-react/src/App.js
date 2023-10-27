@@ -4,7 +4,7 @@ import erc721Abi from './erc721Abi';
 import { useEffect, useState } from 'react';
 import TokenList from './components/TokenList';
 
-function App() {
+const App = ()=> {
   const [web3, setWeb3] = useState();
   const [account, setAccount] = useState('');
   const [newErc721Addr, setNewErc721Addr] = useState();
@@ -21,6 +21,7 @@ function App() {
     const tokenContract = await new web3.eth.Contract(
       erc721Abi, newErc721Addr
     );
+
     const name = await tokenContract.methods.name().call();
     const symbol = await tokenContract.methods.symbol().call();
     const totalSupply = await tokenContract.methods.totalSupply().call();
@@ -61,7 +62,11 @@ function App() {
         <input type="text" onChange={(e)=>{setNewErc721Addr(e.target.value);}}></input>
         <button onClick={addNewErc721Token}>add new erc721</button>
       </div>
-      <TokenList web3={web3} account={account} erc721list={erc721list} />
+      <TokenList 
+        web3={web3} 
+        account={account} 
+        erc721list={erc721list}
+        newErc721Addr={newErc721Addr} />
     </div>
   );
 }
